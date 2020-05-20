@@ -21,6 +21,13 @@ KK's learning note.
 正文：
 下面**粗体**是代码：
 ```
-[bash]# rm -rf /tmp/*
+Git删除当前分支下的所有历史版本与log并同步至GitHub
+git checkout --orphan latest_branch
+git add -A
+git commit -am "clean history"
+git branch -D master
+git branch -m master
+git push -f origin master
+
 ```
 代码结束了。
