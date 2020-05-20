@@ -1,0 +1,166 @@
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
+
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+
+    "defaultProfile": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
+    "profiles":
+    [
+        {
+            // Make changes here to the powershell.exe profile
+            "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+            "name": "Windows PowerShell",
+            "commandline": "powershell.exe",
+            "hidden": false,
+            "fontFace": "DejaVu Sans Mono",
+            "fontSize": 10
+        },
+        {
+            // Make changes here to the cmd.exe profile
+            "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+            "name": "cmd",
+            "commandline": "cmd.exe",
+            "hidden": false,
+            "useAcrylic":true,
+            "acrylicOpacity" : 0.9,
+            "fontFace": "DejaVu Sans Mono",
+            "fontSize": 10,
+            "foreground": "#657B83",
+            "background": "#FDF6E3",
+            "black": "#073642",
+            "red": "#DC322F",
+            "green": "#859900",
+            "yellow": "#B58900",
+            "blue": "#268BD2",
+            "purple": "#D33682",
+            "cyan": "#2AA198",
+            "white": "#EEE8D5",
+            "brightBlack": "#002B36",
+            "brightRed": "#CB4B16",
+            "brightGreen": "#586E75",
+            "brightYellow": "#657B83",
+            "brightBlue": "#839496",
+            "brightPurple": "#6C71C4",
+            "brightCyan": "#93A1A1",
+            "brightWhite": "#FDF6E3",
+            "cursorShape":"Bar",
+            "cursorColor":"#000000"
+            //"useAcrylic" : false
+            
+        },
+        {
+            "guid": "{c6eaf9f4-32a7-5fdc-b5cf-066e8a4b1e40}",
+            "hidden": false,
+            "name": "Ubuntu-18.04",
+            "source": "Windows.Terminal.Wsl",
+            "startingDirectory": "//wsl$/Ubuntu-18.04/home/kk",
+             "copyOnSelect"  :   true,
+            "useAcrylic":true,
+            "acrylicOpacity" : 0.9,
+            "fontFace": "DejaVu Sans Mono",
+            "fontSize": 10,
+            "foreground": "#657B83",
+            "background": "#FDF6E3",
+            "black": "#073642",
+            "red": "#DC322F",
+            "green": "#859900",
+            "yellow": "#B58900",
+            "blue": "#268BD2",
+            "purple": "#D33682",
+            "cyan": "#2AA198",
+            "white": "#EEE8D5",
+            "brightBlack": "#002B36",
+            "brightRed": "#CB4B16",
+            "brightGreen": "#586E75",
+            "brightYellow": "#657B83",
+            "brightBlue": "#839496",
+            "brightPurple": "#6C71C4",
+            "brightCyan": "#93A1A1",
+            "brightWhite": "#FDF6E3",
+            "cursorShape":"Bar",
+            "cursorColor":"#000000",
+            "antialiasingMode":"cleantype",
+            "padding":"0,0,0,0",
+            "scrollbarState":"visible"
+            //"closeOnExit":true
+            //"useAcrylic" : false
+            
+        },
+        {
+            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            "hidden": true,
+            "name": "Azure Cloud Shell",
+            "source": "Windows.Terminal.Azure",
+            "fontFace": "DejaVu Sans Mono",
+            "fontSize": 10
+        },
+        {
+            "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
+            "hidden": false,
+            "name": "Ubuntu-20.04",
+            "source": "Windows.Terminal.Wsl"
+        }
+    ],
+
+    // Add custom color schemes to this array
+    "schemes": [],
+
+    // Add any keybinding overrides to this array.
+    // To unbind a default keybinding, set the command to "unbound"
+    "keybindings": [
+        { "command": "closePane", "keys": "ctrl+shift+w" },
+        { "command": "closeWindow", "keys": "alt+f4" },
+        { "command": "copy", "keys": "ctrl+shift+c" },
+        { "command": "copy", "keys": "ctrl+insert" },
+        { "command": "decreaseFontSize", "keys": "ctrl+-" },
+        { "command": "duplicateTab", "keys": "ctrl+shift+d" },
+        { "command": "increaseFontSize", "keys": "ctrl+=" },
+        { "command": { "action": "moveFocus", "direction": "down" }, "keys": "alt+down" },
+        { "command": { "action": "moveFocus", "direction": "left" }, "keys": "alt+left" },
+        { "command": { "action": "moveFocus", "direction": "right" }, "keys": "alt+right" },
+        { "command": { "action": "moveFocus", "direction": "up" }, "keys": "alt+up" },
+        { "command": "newTab", "keys": "ctrl+shift+t" },
+        { "command": { "action": "newTab", "index": 0 }, "keys": "ctrl+shift+1" },
+        { "command": { "action": "newTab", "index": 1 }, "keys": "ctrl+shift+2" },
+        { "command": { "action": "newTab", "index": 2 }, "keys": "ctrl+shift+3" },
+        { "command": { "action": "newTab", "index": 3 }, "keys": "ctrl+shift+4" },
+        { "command": { "action": "newTab", "index": 4 }, "keys": "ctrl+shift+5" },
+        { "command": { "action": "newTab", "index": 5 }, "keys": "ctrl+shift+6" },
+        { "command": { "action": "newTab", "index": 6 }, "keys": "ctrl+shift+7" },
+        { "command": { "action": "newTab", "index": 7 }, "keys": "ctrl+shift+8" },
+        { "command": { "action": "newTab", "index": 8 }, "keys": "ctrl+shift+9" },
+        { "command": "nextTab", "keys": "ctrl+tab" },
+        { "command": "openNewTabDropdown", "keys": "ctrl+shift+space" },
+        { "command": "openSettings", "keys": "ctrl+," },
+        { "command": "paste", "keys": "ctrl+shift+v" },
+        { "command": "paste", "keys": "shift+insert" },
+        { "command": "prevTab", "keys": "ctrl+shift+tab" },
+        { "command": "resetFontSize", "keys": "ctrl+0" },
+        { "command": { "action": "resizePane", "direction": "down" }, "keys": "alt+shift+down" },
+        { "command": { "action": "resizePane", "direction": "left" }, "keys": "alt+shift+left" },
+        { "command": { "action": "resizePane", "direction": "right" }, "keys": "alt+shift+right" },
+        { "command": { "action": "resizePane", "direction": "up" }, "keys": "alt+shift+up" },
+        { "command": "scrollDown", "keys": "ctrl+shift+down" },
+        { "command": "scrollDownPage", "keys": "ctrl+shift+pgdn" },
+        { "command": "scrollUp", "keys": "ctrl+shift+up" },
+        { "command": "scrollUpPage", "keys": "ctrl+shift+pgup" },
+        { "command": { "action": "splitPane", "split": "horizontal"}, "keys": "alt+shift+-" },
+        { "command": { "action": "splitPane", "split": "vertical"}, "keys": "alt+shift+plus" },
+        { "command": { "action": "switchToTab", "index": 0 }, "keys": "ctrl+alt+1" },
+        { "command": { "action": "switchToTab", "index": 1 }, "keys": "ctrl+alt+2" },
+        { "command": { "action": "switchToTab", "index": 2 }, "keys": "ctrl+alt+3" },
+        { "command": { "action": "switchToTab", "index": 3 }, "keys": "ctrl+alt+4" },
+        { "command": { "action": "switchToTab", "index": 4 }, "keys": "ctrl+alt+5" },
+        { "command": { "action": "switchToTab", "index": 5 }, "keys": "ctrl+alt+6" },
+        { "command": { "action": "switchToTab", "index": 6 }, "keys": "ctrl+alt+7" },
+        { "command": { "action": "switchToTab", "index": 7 }, "keys": "ctrl+alt+8" },
+        { "command": { "action": "switchToTab", "index": 8 }, "keys": "ctrl+alt+9" },
+        { "command": "find", "keys": "ctrl+shift+f" },
+        { "command": "toggleFullscreen", "keys": "alt+enter" },
+        { "command": "toggleFullscreen", "keys": "f11" }
+
+    ]
+}
+
+
