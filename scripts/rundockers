@@ -1,7 +1,11 @@
-docker run -d --name ms51 -h ms51 --network net188 --ip 192.168.188.51 --privileged -p 9051:22 -v /data/mysql57/:/opt -v /data/datadir/57-1/:/data -v /data/ofiles:/ofiles cos:latest
-docker run -d --name ms52 -h ms52 --network net188 --ip 192.168.188.52 --privileged -p 9052:22 -v /data/mysql57/:/opt -v /data/datadir/57-2/:/data -v /data/ofiles:/ofiles cos:latest
-docker run -d --name ms53 -h ms53 --network net188 --ip 192.168.188.53 --privileged -p 9053:22 -v /data/mysql57/:/opt -v /data/datadir/57-3/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms51 -h ms51 --network net188 --ip 192.168.188.51 --privileged -p 127.0.0.1:9051:22 -v /data/mysql57/:/opt -v /data/datadir/57-1/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms52 -h ms52 --network net188 --ip 192.168.188.52 --privileged -p 127.0.0.1:9052:22 -v /data/mysql57/:/opt -v /data/datadir/57-2/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms53 -h ms53 --network net188 --ip 192.168.188.53 --privileged -p 127.0.0.1:9053:22 -v /data/mysql57/:/opt -v /data/datadir/57-3/:/data -v /data/ofiles:/ofiles cos:latest
 
-docker run -d --name ms81 -h ms81 --network net188 --ip 192.168.188.81 --privileged -p 9081:22 -v /data/mysql80/:/opt -v /data/datadir/80-1/:/data -v /data/ofiles:/ofiles cos:latest
-docker run -d --name ms82 -h ms82 --network net188 --ip 192.168.188.82 --privileged -p 9082:22 -v /data/mysql80/:/opt -v /data/datadir/80-2/:/data -v /data/ofiles:/ofiles cos:latest
-docker run -d --name ms83 -h ms83 --network net188 --ip 192.168.188.83 --privileged -p 9083:22 -v /data/mysql80/:/opt -v /data/datadir/80-3/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms81 -h ms81 --network net188 --ip 192.168.188.81 --privileged -p 127.0.0.1:9081:22 -v /data/mysql80/:/opt -v /data/datadir/80-1/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms82 -h ms82 --network net188 --ip 192.168.188.82 --privileged -p 127.0.0.1:9082:22 -v /data/mysql80/:/opt -v /data/datadir/80-2/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms83 -h ms83 --network net188 --ip 192.168.188.83 --privileged -p 127.0.0.1:9083:22 -v /data/mysql80/:/opt -v /data/datadir/80-3/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms84 -h ms84 --network net188 --ip 192.168.188.84 --privileged -p 127.0.0.1:9084:22 -v /data/mysql80/:/opt -v /data/datadir/80-4/:/data -v /data/ofiles:/ofiles cos:latest
+docker run -d --name ms85 -h ms85 --network net188 --ip 192.168.188.85 --privileged -p 127.0.0.1:9085:22 -v /data/mysql80/:/opt -v /data/datadir/80-5/:/data -v /data/ofiles:/ofiles cos:latest
+
+#也许需要改为0.0.0.0
