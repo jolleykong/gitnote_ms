@@ -363,6 +363,16 @@ mysql> select * from performance_schema.replication_group_members;
 +---------------------------+--------------------------------------+-------------+-------------+--------------+
 3 rows in set (0.00 sec)
 
+当前master
+mysql> select * from performance_schema.global_status where variable_name='group_replication_primary_member';
++----------------------------------+--------------------------------------+
+| VARIABLE_NAME                    | VARIABLE_VALUE                       |
++----------------------------------+--------------------------------------+
+| group_replication_primary_member | b24d5bc3-e379-11ea-8eae-0242c0a8bc35 |
++----------------------------------+--------------------------------------+
+1 row in set (0.00 sec)
+
+
 ```
 
 噢，忘了检查事务情况。 三节点结果一样，转换全面成功。
