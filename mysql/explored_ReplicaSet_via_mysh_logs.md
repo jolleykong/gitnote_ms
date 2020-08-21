@@ -59,18 +59,31 @@
     ```
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SET SESSION `autocommit` = 1
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SET SESSION `sql_mode` = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
-    2020-05-25 02:31:13: Info: 192.168.188.81:3388: SET SESSION `group_replication_consistency` = 'EVENTUAL'
+    
+    #一致性读增强 group_replication_consistency
+    2020-05-25 02:31:13: Info: 192.168.188.81:3388: SET SESSION `group_replication_consistency` = 'EVENTUAL'   
+    
+    #获取地址和端口
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SELECT COALESCE(@@report_host, @@hostname),  COALESCE(@@report_port, @@port)
+    
+    #获取UUID
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SELECT @@server_uuid
     2020-05-25 02:31:13: Debug: Metadata operations will use ms81:3388
+    
+    #检查是否存在RS的metadata表
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SHOW DATABASES LIKE 'mysql_innodb_cluster_metadata'
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SHOW DATABASES LIKE 'mysql_innodb_cluster_metadata_bkp'
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SHOW DATABASES LIKE 'mysql_innodb_cluster_metadata'
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SHOW DATABASES LIKE 'mysql_innodb_cluster_metadata_bkp'
+
+    #查询是不是MGR成员，查询是否是MGR里的在线成员。
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: select count(*) from performance_schema.replication_group_members where MEMBER_ID = @@server_uuid AND MEMBER_STATE IS NOT NULL AND MEMBER_STATE <> 'OFFLINE'
     2020-05-25 02:31:13: Debug: Instance type check: ms81:3388: GR is installed but not active
+
+    #获取OS信息：linux-glibc2.12
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('version_compile_os')
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SELECT COUNT(*) FROM mysql.func WHERE dl = /*(*/ 'locking_service.so' /*(*/ AND name IN ('service_get_read_locks', 'service_get_write_locks', 'service_release_locks')
+
     2020-05-25 02:31:13: Debug: Acquiring EXCLUSIVE lock ('AdminAPI_instance', 'AdminAPI_lock') on ms81:3388.
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: SELECT service_get_write_locks('AdminAPI_instance', 'AdminAPI_lock', 0)
     2020-05-25 02:31:13: Debug: A new replicaset with instance 'ms81:3388' will be created.
@@ -81,15 +94,24 @@
     2020-05-25 02:31:13: Debug: Target has report_host=NULL
     2020-05-25 02:31:13: Debug: Target has hostname=ms81
     2020-05-25 02:31:13: Debug: This instance reports its own address as ms81:3388
+
+    #默认为ON，startup时读取mysqld-auto.cnf ，为OFF时跳过对该文件的读取。
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('persisted_globals_load')
+
+    #获取page size
     2020-05-25 02:31:13: Info: Validating InnoDB page size of instance 'ms81:3388'.
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('innodb_page_size')
+
+    #检查P_S是否启用
     2020-05-25 02:31:13: Info: Checking if performance_schema is enabled on instance 'ms81:3388'.
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('performance_schema')
+
     2020-05-25 02:31:13: Info: Validating configuration of ms81:3388 (mycnf = )
     2020-05-25 02:31:13: Debug: Checking if 'server_id' is compatible.
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('server_id')
     2020-05-25 02:31:13: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('performance_schema')
+
+    #EXPLICIT，MySQL8.0中将很多数据库配置信息都写入了variables_info表中
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT variable_source FROM performance_schema.variables_info WHERE variable_name = 'server_id'
     2020-05-25 02:31:14: Debug: OK: 'server_id' value '813388' is compatible.
     2020-05-25 02:31:14: Debug: Checking if 'log_bin' is compatible.
@@ -97,14 +119,18 @@
     2020-05-25 02:31:14: Debug: OK: 'log_bin' value 'ON' is compatible.
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('port')
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('slave_parallel_workers')
+
+    #检查binlog format是否满足InnoDB Cluster要求（row）
     2020-05-25 02:31:14: Debug: Checking if 'binlog_format' is compatible with InnoDB Cluster.
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('binlog_format')
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT variable_value FROM performance_schema.persisted_variables WHERE variable_name = 'binlog_format'
     2020-05-25 02:31:14: Debug: OK: 'binlog_format' value 'ROW' is compatible.
+
     2020-05-25 02:31:14: Debug: Checking if 'log_slave_updates' is compatible with InnoDB Cluster.
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('log_slave_updates')
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT variable_value FROM performance_schema.persisted_variables WHERE variable_name = 'log_slave_updates'
     2020-05-25 02:31:14: Debug: OK: 'log_slave_updates' value 'ON' is compatible.
+
     2020-05-25 02:31:14: Debug: Checking if 'enforce_gtid_consistency' is compatible with InnoDB Cluster.
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('enforce_gtid_consistency')
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT variable_value FROM performance_schema.persisted_variables WHERE variable_name = 'enforce_gtid_consistency'
@@ -121,18 +147,28 @@
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('relay_log_info_repository')
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT variable_value FROM performance_schema.persisted_variables WHERE variable_name = 'relay_log_info_repository'
     2020-05-25 02:31:14: Debug: OK: 'relay_log_info_repository' value 'TABLE' is compatible.
+
+
     2020-05-25 02:31:14: Debug: Checking if 'report_port' is compatible with InnoDB Cluster.
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('report_port')
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT variable_value FROM performance_schema.persisted_variables WHERE variable_name = 'report_port'
     2020-05-25 02:31:14: Debug: OK: 'report_port' value '3388' is compatible.
     2020-05-25 02:31:14: Debug: Check command returned: {"status": "ok"}
+
+
+    #查询复制过滤规则？
     2020-05-25 02:31:14: Debug: ms81:3388: Instance configuration is suitable.
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SHOW MASTER STATUS
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT count(*) FROM performance_schema.replication_applier_global_filters WHERE filter_rule <> ''
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT count(*) FROM performance_schema.replication_applier_filters WHERE filter_rule <> ''
+
+    #这段是MGR的判断。判断MGR各节点状态。
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT @@group_replication_group_name group_name,  @@group_replication_single_primary_mode single_primary,  @@server_uuid,  member_state,  (SELECT    sum(IF(member_state in ('ONLINE', 'RECOVERING'), 1, 0)) > sum(1)/2   FROM performance_schema.replication_group_members) has_quorum, COALESCE(/*!80002 member_role = 'PRIMARY', NULL AND */     NOT @@group_replication_single_primary_mode OR     member_id = (select variable_value       from performance_schema.global_status       where variable_name = 'group_replication_primary_member') ) is_primary FROM performance_schema.replication_group_members WHERE member_id = @@server_uuid
+
     2020-05-25 02:31:14: Info: ms81:3388: -> MySQL Error 1193 (HY000): Unknown system variable 'group_replication_group_name'
     2020-05-25 02:31:14: Error: Error while querying for group_replication info: Unknown system variable 'group_replication_group_name'
+
+    # 查询出各通道的状态，并判断各通道的延迟情况。
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT
         c.channel_name, c.host, c.port, c.user,
         s.source_uuid, s.group_name, s.last_heartbeat_timestamp,
@@ -190,18 +226,24 @@
     LEFT JOIN performance_schema.threads wt
         ON w.thread_id = wt.thread_id
     ORDER BY channel_name
+
+    #查询从节点。此时没有结果返回，光杆司令。
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SHOW SLAVE HOSTS
     2020-05-25 02:31:14: Info: Unfencing PRIMARY ms81:3388
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SET PERSIST `SUPER_READ_ONLY` = 'OFF'
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SET PERSIST `READ_ONLY` = 'OFF'
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('server_id')
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('server_id')
+
+    #重建rs专用用户
     2020-05-25 02:31:14: Info: Dropping account mysql_innodb_rs_813388@% at ms81:3388
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: DROP USER IF EXISTS 'mysql_innodb_rs_813388'@'%'
     2020-05-25 02:31:14: Info: Creating replication user mysql_innodb_rs_813388@% with random password at ms81:3388
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: CREATE USER IF NOT EXISTS 'mysql_innodb_rs_813388'@'%' IDENTIFIED BY ****
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: GRANT REPLICATION SLAVE ON *.* TO 'mysql_innodb_rs_813388'@'%'
     2020-05-25 02:31:14: Debug: * Updating metadata...
+
+    # 在这里直接查询……然后发现没有metadata表。
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SELECT `major`, `minor`, `patch` FROM `mysql_innodb_cluster_metadata`.`schema_version`
     2020-05-25 02:31:14: Info: ms81:3388: -> MySQL Error 1049 (42000): Unknown database 'mysql_innodb_cluster_metadata'
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SHOW DATABASES LIKE 'mysql_innodb_cluster_metadata'
@@ -212,6 +254,8 @@
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: SET names utf8mb4
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: --  Metadata Schema Version
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: --  -----------------------
+
+    # 创建了个视图
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: /*
     View that holds the current version of the metadata schema.
 
@@ -222,6 +266,8 @@
     */
     DROP VIEW IF EXISTS schema_version
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: CREATE SQL SECURITY INVOKER VIEW schema_version (major, minor, patch) AS SELECT 2, 0, 0
+
+    # 创建cluster表
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: --  GR Cluster Tables
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: --  -----------------
     2020-05-25 02:31:14: Info: 192.168.188.81:3388: /*
@@ -274,6 +320,10 @@
 
     PRIMARY KEY(cluster_id)
     ) CHARSET = utf8mb4, ROW_FORMAT = DYNAMIC
+
+
+
+    # 创建instance表
     2020-05-25 02:31:15: Info: 192.168.188.81:3388: /*
     Managed MySQL server instances and basic information about them.
     */
@@ -326,6 +376,8 @@
     PRIMARY KEY(instance_id, cluster_id),
     FOREIGN KEY (cluster_id) REFERENCES clusters(cluster_id)
     ) CHARSET = utf8mb4, ROW_FORMAT = DYNAMIC
+
+    # 创建异步复制集群view表
     2020-05-25 02:31:15: Info: 192.168.188.81:3388: --  AR ReplicaSet Tables
     2020-05-25 02:31:15: Info: 192.168.188.81:3388: --  ---------------------
     2020-05-25 02:31:15: Info: 192.168.188.81:3388: /*
@@ -373,6 +425,8 @@
     FOREIGN KEY (cluster_id)
         REFERENCES clusters (cluster_id)
     ) CHARSET = utf8mb4, ROW_FORMAT = DYNAMIC
+
+    # 创建异步复制成员表
     2020-05-25 02:31:16: Info: 192.168.188.81:3388: /*
     The instances that are part of a given view, along with their replication
     master. The PRIMARY will have a NULL master.
@@ -408,6 +462,8 @@
     FOREIGN KEY (cluster_id, view_id)
         REFERENCES async_cluster_views (cluster_id, view_id)
     ) CHARSET = utf8mb4, ROW_FORMAT = DYNAMIC
+
+    # 创建router表
     2020-05-25 02:31:17: Info: 192.168.188.81:3388: /*
     This table contain a list of all router instances that are tracked by the
     cluster.
@@ -507,6 +563,8 @@
 
     PRIMARY KEY (cluster_id, user)
     ) CHARSET = utf8mb4, ROW_FORMAT = DYNAMIC
+
+    # 创建接口视图
     2020-05-25 02:31:18: Info: 192.168.188.81:3388: --  Public Interface Views
     2020-05-25 02:31:18: Info: 192.168.188.81:3388: --  ----------------------
     2020-05-25 02:31:18: Info: 192.168.188.81:3388: /*
@@ -635,32 +693,56 @@
             a.privileges,
             a.attributes
     FROM router_rest_accounts a
+
+    # 通过查询mysql库，向集群metadata库插入数据。
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: USE mysql
     2020-05-25 02:31:19: Info: Creating replicaset metadata...
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: START TRANSACTION
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT uuid()
+
+    # ar == asynchronous repilcation，   pm/mm
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: INSERT INTO mysql_innodb_cluster_metadata.clusters (cluster_id, cluster_name, description, cluster_type, primary_mode, attributes) VALUES ('d10f0970-9e2f-11ea-a355-0242c0a8bc51', 'kk', 'Default ReplicaSet', 'ar', 'pm', JSON_OBJECT('adopted', 0))
+
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: INSERT INTO mysql_innodb_cluster_metadata.async_cluster_views ( cluster_id, view_id, topology_type, view_change_reason, view_change_time, view_change_info, attributes ) VALUES ('d10f0970-9e2f-11ea-a355-0242c0a8bc51', 1, 'SINGLE-PRIMARY-TREE', 'CREATE', NOW(6), JSON_OBJECT('user', USER(),   'source', @@server_uuid),'{}')
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: COMMIT
     2020-05-25 02:31:19: Info: Recording metadata for ms81:3388
+
+    #MGR的动作
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT @@mysqlx_port
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: show GLOBAL variables where `variable_name` in ('group_replication_local_address')
+
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT COUNT(*) FROM mysql.func WHERE dl = /*(*/ 'locking_service.so' /*(*/ AND name IN ('service_get_read_locks', 'service_get_write_locks', 'service_release_locks')
     2020-05-25 02:31:19: Debug: Acquiring EXCLUSIVE lock ('AdminAPI_metadata', 'AdminAPI_lock') on ms81:3388.
+
+    #上写锁，更新instance元数据表，记录mysqlx port
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT service_get_write_locks('AdminAPI_metadata', 'AdminAPI_lock', 60)
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: START TRANSACTION
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: INSERT INTO mysql_innodb_cluster_metadata.instances (cluster_id, address, mysql_server_uuid, instance_name, addresses, attributes)VALUES ('d10f0970-9e2f-11ea-a355-0242c0a8bc51', 'ms81:3388', 'f1847297-9b2d-11ea-ba52-0242c0a8bc51', 'ms81:3388', json_object('mysqlClassic', 'ms81:3388', 'mysqlX', 'ms81:33060'), '{}')
+
+    #获取最新的view_id。 view_id：每次节点状态变更，view_id+1。
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT MAX(view_id) FROM mysql_innodb_cluster_metadata.async_cluster_views WHERE cluster_id = 'd10f0970-9e2f-11ea-a355-0242c0a8bc51'
     2020-05-25 02:31:19: Debug: Updating metadata for async cluster ADD_INSTANCE view d10f0970-9e2f-11ea-a355-0242c0a8bc51,2
+
+    #将节点信息写入到异步复制集群视图表。
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: INSERT INTO mysql_innodb_cluster_metadata.async_cluster_views (cluster_id, view_id, topology_type,  view_change_reason, view_change_time, view_change_info,  attributes) SELECT cluster_id, 2, topology_type, 'ADD_INSTANCE', NOW(6), JSON_OBJECT('user', USER(),   'source', @@server_uuid), attributes FROM mysql_innodb_cluster_metadata.async_cluster_views WHERE cluster_id = 'd10f0970-9e2f-11ea-a355-0242c0a8bc51' AND view_id = 1
+
+    #将节点信息写入到异步复制成员表
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: INSERT INTO mysql_innodb_cluster_metadata.async_cluster_members (cluster_id, view_id, instance_id, master_instance_id,    primary_master, attributes) SELECT cluster_id, 2, instance_id, master_instance_id,    primary_master, attributes FROM mysql_innodb_cluster_metadata.async_cluster_members WHERE cluster_id = 'd10f0970-9e2f-11ea-a355-0242c0a8bc51' AND view_id = 1
+
+
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: INSERT INTO mysql_innodb_cluster_metadata.async_cluster_members ( cluster_id, view_id, instance_id, master_instance_id, primary_master, attributes) VALUES ('d10f0970-9e2f-11ea-a355-0242c0a8bc51', 2, 1, IF(0=0, NULL, 0), 1,    (SELECT JSON_OBJECT('instance.mysql_server_uuid', mysql_server_uuid,       'instance.address', address)     FROM mysql_innodb_cluster_metadata.instances     WHERE instance_id = 1) )
+
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: COMMIT
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT COUNT(*) FROM mysql.func WHERE dl = /*(*/ 'locking_service.so' /*(*/ AND name IN ('service_get_read_locks', 'service_get_write_locks', 'service_release_locks')
+
+    #释放锁
     2020-05-25 02:31:19: Debug: Releasing locks for 'AdminAPI_metadata' on ms81:3388.
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT service_release_locks('AdminAPI_metadata')
+
+    #更新clusters表
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: UPDATE mysql_innodb_cluster_metadata.clusters SET attributes = json_set(attributes, '$.opt_gtidSetIsComplete', CAST('false' as JSON)) WHERE cluster_id = 'd10f0970-9e2f-11ea-a355-0242c0a8bc51'
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT COUNT(*) FROM mysql.func WHERE dl = /*(*/ 'locking_service.so' /*(*/ AND name IN ('service_get_read_locks', 'service_get_write_locks', 'service_release_locks')
+
     2020-05-25 02:31:19: Debug: Releasing locks for 'AdminAPI_instance' on ms81:3388.
     2020-05-25 02:31:19: Info: 192.168.188.81:3388: SELECT service_release_locks('AdminAPI_instance')
     2020-05-25 02:31:19: Debug: ReplicaSet object successfully created for ms81:3388.
@@ -698,7 +780,11 @@
     2020-05-25 02:32:51: Info: Detecting state of failed MD schema upgrade... schema_version=2.0.0, target_version=2.0.0, backup_exists=0, saved_stage=null
     2020-05-25 02:32:51: Info: Failed MD schema upgrade detected to be in stage OK
     2020-05-25 02:32:51: Info: 192.168.188.81:3388: SELECT `major`, `minor`, `patch` FROM `mysql_innodb_cluster_metadata`.`schema_version`
+
+
     2020-05-25 02:32:51: Info: 192.168.188.81:3388: SELECT i.instance_id, i.cluster_id, c.group_name, am.master_instance_id, am.master_member_id, am.member_role, am.view_id, i.label, i.mysql_server_uuid, i.address, i.endpoint, i.xendpoint, '' as grendpoint FROM mysql_innodb_cluster_metadata.v2_instances i LEFT JOIN mysql_innodb_cluster_metadata.v2_gr_clusters c   ON c.cluster_id = i.cluster_id LEFT JOIN mysql_innodb_cluster_metadata.v2_ar_members am   ON am.instance_id = i.instance_id
+
+    
     2020-05-25 02:32:51: Info: 192.168.188.81:3388: SELECT * FROM (
     SELECT cluster_type, primary_mode, cluster_id, cluster_name,
         description, NULL as group_name, async_topology_type
