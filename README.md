@@ -1,3 +1,13 @@
+# 20200830更新
+找到了typora+markdown+github的方案解决笔记格式和整理的问题
+
+恰巧发现github开放了个人用户免费私有库的功能
+
+本库可能就此放弃，全面转向私有库。
+
+
+
+
 # GitNote Of MySQL
 
 KK's learning note.
